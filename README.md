@@ -42,7 +42,7 @@ Summary of installation steps (see above links for full guideline):
 3. Make access credentials to your AWS account available within a shared AWS config file (see [Link 1](https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html) and [Link 2](https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html))
 4. Bootstrap your AWS account by running `cdk bootstrap`
 
-**NOTE:** Due to restricted privileges it might not be possible bootstrap an AWS Academy account. AWS CDK is therefore not useable with such an account and infrastructure will have to be managed manually via the AWS CLI or the AWS Management Console. Any infrastructure definition within the ***iac*** directory should be seens as documentation.
+**NOTE:** Due to restricted privileges it might not be possible to bootstrap an AWS Academy account. AWS CDK is therefore not useable with such an account and infrastructure will have to be managed manually via the AWS CLI or the AWS Management Console. Any infrastructure definition within the ***iac*** directory should be seen as documentation.
 
 ## IDE
 

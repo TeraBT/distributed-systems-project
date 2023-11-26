@@ -1,92 +1,148 @@
-# 703088 Distributed Systems Group Project
+# Description
 
+This repository contains all code and resources for the group assignment of the WS2023 PS 703088 Verteilte Systeme.
 
+## Contributors
+| Name | Matriculation Number | Student ID |
+|---|---|---|
+| Christopher BAUMGARTNER-TRÖSCH | | |
+| Emanuel PRADER | | |
+| Fabian MARGREITER | 12122376 | csba4402 |
+| Lara PICHLER | | |
 
-## Getting started
+# Repository structure
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+The repository contains the components necessary to setup the service within the AWS cloud. The service combines functional code and infrastructure as code:
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- The ***apollo*** directory contains code for the execution of the flow service written in [AFCL](https://apollowf.github.io/)
+- The ***build*** directory contains functional code for Lambda functions, etc.
+- The ***doc*** directory contains any media and textual information for planning and documenting the service
+- The ***iac*** directory contains the AWS CDK Stack defining AWS resources
+- The ***scripts*** directory contains miscellaneous helper scripts
+- The ***test*** directory contains unit and integration tests for both functional and infrastructure code
 
-## Add your files
+# Installation and setup
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Python
+
+Python is the programming language used for functional and infrastructure code. A working Python 3.11 installation is required on your machine. See [https://www.python.org/downloads/](https://www.python.org/downloads/).
+
+Setup a suitable virtual environment by running `.\scripts\setup_venv.bat` (Linux: `./scripts/setup_venv.sh`). Activate the virtual environment by running `.\.venv\Scripts\activate` (Linux: `source .venv/bin/activate`).
+
+Set the active Python interpreter in VSCode by hitting _Ctrl+Shift+P_, then typing _Python: Select Interpreter_ and choosing the Python executable within the **.venv** directory.
+
+## AWS CDK
+
+The AWS CDK is used for infrastructure as code definition. See [https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_prerequisites](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html#getting_started_prerequisites) for setup guidance and [https://cdkworkshop.com/30-python.html](https://cdkworkshop.com/30-python.html) for an introductory workshop.
+
+Summary of installation steps (see above links for full guideline):
+
+1. Install Node 14.15.0 or later
+2. Install the AWS CDK Toolkit by running `npm install -g aws-cdk` (verify success by running `cdk --version`)
+3. Make access credentials to your AWS account available within a shared AWS config file (see [Link 1](https://docs.aws.amazon.com/sdkref/latest/guide/file-format.html) and [Link 2](https://docs.aws.amazon.com/sdkref/latest/guide/file-location.html))
+4. Bootstrap your AWS account by running `cdk bootstrap`
+
+**NOTE:** Due to restricted privileges it might not be possible bootstrap an AWS Academy account. AWS CDK is therefore not useable with such an account and infrastructure will have to be managed manually via the AWS CLI or the AWS Management Console. Any infrastructure definition within the ***iac*** directory should be seens as documentation.
+
+## IDE
+
+> **[IMPORTANT]** To guarantee uniform coding standards VSCode is the only IDE that should be used for development
+
+The repository comes with workspace specific settings to automatically ensure uniform coding standards amongst different developers. When initially opening the project directory VSCode should recommend to install some extensions (popup in lower right corner). Install all of them. Do not adjust any settings. If such a popup is not shown, navigate to the extensions tab (_Ctrl+Shift+X_), type _@recommended_ into the search field and install all workspace recommendations.
+
+### boto3 IntelliSense
+
+boto3 as the AWS SDK might be used within functional code of Lambda functions to interact with other cloud resources. IntelliSense does per default not work with most boto3 classes and methods. If the boto3 extension in VSCode has been installed as described before, IntelliSense can be enabled by the following steps:
+
+1. Hit _Ctrl+Shift+P_ to open the command palette
+2. Type _AWS boto3: Quick Start_ and confirm
+3. If a popup shows up that this project uses boto3 without code completion, click _Enable boto3 code completion_
+4. Wait for the (next) popup in the lower right corner and click the middle button _Install_
+5. When prompted to select boto3 services, enable:
+    - boto3 common
+    - S3
+    - Any other AWS service that is used
+6. Wait for the installation to complete
+
+IntelliSense should thereafter be available for boto3 classes used within Python code.
+
+# Development workflow
+
+1. Create an issue in GitLab
+    - Add a short but understandable title
+    - Add more details in the description if necessary
+        - The issue should somehow be understandable for others than the author
+        - This field can be used to collect ideas, thoughts, etc. regarding the issue
+    - Assign a responsible person (or leave unassigned if not possible at the moment)
+    - Select one of the predefined milestones
+    - Choose one suitable label
+        - **Feature**
+            - Something that implements a step working towards the goal of the project and produces code
+            - Examples:
+                - Create function xyz
+                - Define S3 bucket specifications 
+        - **Task**
+            - Something that is necessary for the project, but does not directly produce code
+            - Examples:
+                - Create a new diagram used for planning and documentation purposes
+                - Create the final presentation
+                - Do initial training on Apollo
+        - **Bug**
+            - A bug within the application
+            - Add details on how to reproduce the bug in the issue description
+            - The issue is completed, when the bug cannot be reproduced anymore
+    - Setting a due date is not required
+
+2. Work on the issue
+    - Assign yourself as the responsible person
+    - Use the GitLab issue to collect notes (if that makes sense)
+    - If files are to be changed/created
+        - Create a branch out of the main branch, named as `<issue no>-<issue title>` (issue title in lower case, spaces replaced by `-`)
+        - Commit and push any changes to that branch
+
+3. Complete the issue
+    - If a branch has been created before
+        - Select the GitLab issue
+        - Create a merge request and assign a reviewer (and inform the reviewer)
+        - If reviewer declines merge request, return to step 2
+    - If no branch has been created
+        - Close the GitLab issue
+
+# Usage
+
+Setup and installation must be completed as described before to run any of the following commands. The Python virtual environment must be active.
+
+## Run unit tests
+
+Run unit tests (without coverage report generation):
 
 ```
-cd existing_repo
-git remote add origin https://git.uibk.ac.at/csba4402/703088-distributed-systems-group-project.git
-git branch -M main
-git push -uf origin main
+pytest
 ```
 
-## Integrate with your tools
+Run unit test (with coverage report generation - see **htmlcov/index.html**):
 
-- [ ] [Set up project integrations](https://git.uibk.ac.at/csba4402/703088-distributed-systems-group-project/-/settings/integrations)
+```
+coverage run -m pytest
+coverage html --omit="tests/*"
+```
 
-## Collaborate with your team
+Run specific unit tests (with output enabled):
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+- Annotate tests to run with @pytest.mark.debug
+- Execute:
 
-## Test and Deploy
+```
+pytest -m debug -s
+```
+- Remove @pytest.mark.debug annotations again
 
-Use the built-in continuous integration in GitLab.
+## Deploy AWS infrastructure
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Deploy AWS infrastructure by running `.\scripts\deploy.bat` (Linux: `./scripts/deploy.sh`). Confirm prompts if required.
 
-***
+**NOTE:** This requires a functional AWS CDK installation and a bootstrapped AWS account.
 
-# Editing this README
+## Undeploy AWS infrastructure
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Undeploy AWS infrastructure by running `cdk destroy`. Confirm prompts if required

@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.isort",
+        "ms-python.vscode-pylance",
+        "ms-python.vscode-python",
+        "ms-python.black-formatter",
+        "sonarsource.sonarlint-vscode",
+        "boto3typed.boto3-ide",
+        "njpwerner.autodocstring"
+    ]
+}

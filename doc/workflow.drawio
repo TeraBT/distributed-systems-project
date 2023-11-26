@@ -1,0 +1,101 @@
+<mxfile host="app.diagrams.net" modified="2023-11-24T08:39:10.565Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/119.0" etag="khjSYbGFPtFdMXKCAw0m" version="22.1.3" type="device">
+  <diagram name="Seite-1" id="asZTPn6_kuxb6qbg5LVR">
+    <mxGraphModel dx="1434" dy="754" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="4681" pageHeight="3300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-13" target="zjtv4nC_cZxDd9Oc140K-21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="520" />
+              <mxPoint x="580" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-13" target="zjtv4nC_cZxDd9Oc140K-22">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="520" />
+              <mxPoint x="740" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-13" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="840" y="200" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-1" target="zjtv4nC_cZxDd9Oc140K-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-1" target="zjtv4nC_cZxDd9Oc140K-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-1" value="Load images" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="120" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-3" target="zjtv4nC_cZxDd9Oc140K-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-3" target="zjtv4nC_cZxDd9Oc140K-22">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="460" y="520" />
+              <mxPoint x="740" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-3" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="360" y="200" width="200" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-4" value="Count cars" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="240" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-5" value="Determine capacity" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="320" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-6" value="Determine load" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="400" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-7" target="zjtv4nC_cZxDd9Oc140K-21">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="520" />
+              <mxPoint x="580" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-7" target="zjtv4nC_cZxDd9Oc140K-22">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="520" />
+              <mxPoint x="740" y="520" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-7" value="" style="rounded=0;whiteSpace=wrap;html=1;dashed=1;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="600" y="200" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-8" value="Detect emergency vehicles" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="240" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-11" value="Calculate quality" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="880" y="240" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-14" value="Classify" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="320" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="zjtv4nC_cZxDd9Oc140K-20" target="zjtv4nC_cZxDd9Oc140K-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-20" value="Load air quality data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="880" y="120" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-21" value="Set speed limit" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="520" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zjtv4nC_cZxDd9Oc140K-22" value="Block lanes and inform" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="560" width="120" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -5,10 +5,10 @@ This repository contains all code and resources for the group assignment of the 
 ## Contributors
 | Name | Matriculation Number | Student ID |
 |---|---|---|
-| Christopher BAUMGARTNER-TRÖSCH | | |
-| Emanuel PRADER | | |
+| Christopher BAUMGARTNER-TRÖSCH | | csaw4421 |
+| Emanuel PRADER | | csaz9581 |
 | Fabian MARGREITER | 12122376 | csba4402 |
-| Lara PICHLER | | |
+| Lara PICHLER | | csba1775 |
 
 # Repository structure
 
@@ -19,7 +19,7 @@ The repository contains the components necessary to setup the service within the
 - The ***doc*** directory contains any media and textual information for planning and documenting the service
 - The ***iac*** directory contains the AWS CDK Stack defining AWS resources
 - The ***scripts*** directory contains miscellaneous helper scripts
-- The ***test*** directory contains unit and integration tests for both functional and infrastructure code
+- The ***tests*** directory contains unit and integration tests for both functional and infrastructure code
 
 # Installation and setup
 

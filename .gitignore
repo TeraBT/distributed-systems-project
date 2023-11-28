@@ -1,5 +1,9 @@
 *.swp
 package-lock.json
+package.json
+node_modules/
+pnpm-lock.yaml
+
 __pycache__
 .pytest_cache
 .venv

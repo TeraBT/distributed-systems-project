@@ -6,7 +6,7 @@ This repository contains all code and resources for the group assignment of the 
 | Name | Matriculation Number | Student ID |
 |---|---|---|
 | Christopher BAUMGARTNER-TRÖSCH | | csaw4421 |
-| Emanuel PRADER | | csaz9581 |
+| Emanuel PRADER | 12116213 | csaz9581 |
 | Fabian MARGREITER | 12122376 | csba4402 |
 | Lara PICHLER | | csba1775 |
 

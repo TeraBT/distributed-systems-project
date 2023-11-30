@@ -5,10 +5,10 @@ This repository contains all code and resources for the group assignment of the 
 ## Contributors
 | Name | Matriculation Number | Student ID |
 |---|---|---|
-| Christopher BAUMGARTNER-TRÖSCH | | csaw4421 |
+| Christopher BAUMGARTNER-TRÖSCH | 11908149 | csaw4421 |
 | Emanuel PRADER | 12116213 | csaz9581 |
 | Fabian MARGREITER | 12122376 | csba4402 |
-| Lara PICHLER | | csba1775 |
+| Lara PICHLER | 12124086 | csba1775 |
 
 # Repository structure
 

@@ -1,9 +1,9 @@
-<div align="center">
+<!-- <div align="center"> -->
     [![Python](https://img.shields.io/badge/3.11%2B-blue?style=for-the-badge&logo=python&logoColor=blue&labelColor=grey)](https://www.python.org/downloads/source/)
     [![Node](https://img.shields.io/badge/14.15%2B-green?style=for-the-badge&logo=nodedotjs&logoColor=green&labelColor=grey)](https://nodejs.org/en)
     [![CDK](https://img.shields.io/badge/CDK-2.111-orange?style=for-the-badge&logo=amazonaws&logoColor=orange&labelColor=grey)](https://docs.aws.amazon.com/cdk/v2/guide/getting_started.html)
     [![CLI](https://img.shields.io/badge/CLI-2.11-orange?style=for-the-badge&logo=amazonaws&logoColor=orange&laabelColor=grey)](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
-</div>
+<!-- </div> -->
 # Description
 
 This repository contains all code and resources for the group assignment of the WS2023 PS 703088 Verteilte Systeme.

@@ -1,4 +1,4 @@
-[![Static Badge](https://img.shields.io/badge/v3.11%2B-grey%3Fstyle%3Dfor-the-badge)]()
+[![Static Badge](https://img.shields.io/badge/python-blue-v3.11+%2B-grey)]()
 # Description
 
 This repository contains all code and resources for the group assignment of the WS2023 PS 703088 Verteilte Systeme.

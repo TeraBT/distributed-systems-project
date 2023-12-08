@@ -1,0 +1,56 @@
+buildscript {
+  repositories {
+    jcenter()
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'jacoco'
+// for compliance with higher Java versions
+jacoco {
+  toolVersion = "0.8.5"
+}
+
+mainClassName = 'at.uibk.dps.ee.guice.starter.EeConfiguration'
+
+group 'importance'
+version '1.0-SNAPSHOT'
+
+
+repositories {
+  mavenCentral()
+  maven {
+    name "jitpack"
+    url 'https://jitpack.io' }
+}
+
+dependencies {
+  if (project.hasProperty("local")) {
+    implementation project (':EE-Core')
+    implementation project (':EE-Guice')
+    implementation project (':EE-Model')
+    implementation project (':EE-IO')
+    implementation project (':EE-Enactables')
+    implementation project (':SC-Core')
+    implementation project (':EE-Control')
+    implementation project (':EE-Visualization')
+    implementation project (':EE-Docker')
+  }else {
+    implementation 'com.github.Apollo-Core:EE-Core:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Guice:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Model:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-IO:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Enactables:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Control:master'
+    implementation 'com.github.Apollo-Core:SC-Core:main-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Visualization:master-SNAPSHOT'
+    implementation 'com.github.Apollo-Core:EE-Docker:master-SNAPSHOT'
+  }
+
+  // dependency to Opt4J
+  implementation 'com.github.FedorSmirnov89:opt4j:-SNAPSHOT'
+  // dependency to opendse
+  implementation 'com.github.FedorSmirnov89:opendse:-SNAPSHOT'
+}

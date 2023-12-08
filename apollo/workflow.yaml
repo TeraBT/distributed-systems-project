@@ -1,0 +1,227 @@
+{
+  name: "traffic-information-system",
+  dataIns: [],
+  workflowBody: [
+    {
+      function: {
+        name: "get-predict-for-timestamp",
+        type: "GetPredictForTimestampAWSLambda",
+        dataIns: [
+          {name: "ref", type: "number", source: 0}
+        ],
+        dataOuts: [
+          {name: "predictFor", type: "number"}
+        ]
+      }
+    },
+    {
+      function: {
+        name: "get-camera-list",
+        type: "GetCameraListAWSLambda",
+        dataIns: [
+          {name: "predictFor", type: "number", source: "get-predict-for-timestamp/predictFor"}
+        ],
+        dataOuts: [
+          {name: "cameraIds", type: "array"}
+        ]
+      }
+    },
+    {
+      parallelFor: {
+        name: "analyze-data-per-camera",
+        dataIns: [
+          {name: "cameraIds", type: "array", source: "get-camera-list/cameraIds"}
+        ],
+        iterators: ["cameraIds"],
+        loopBody: [
+          {
+            function: {
+              name: "get-images",
+              type: "GetImagesAWSLambda",
+              dataIns: [
+                {name: "predictFor", type: "number", source: "get-predict-for-timestamp/predictFor"},
+                {name: "cameraId", type: "string", source: "analyze-data-per-camera/cameraIds"}
+              ],
+              dataOuts: [
+                {name: "imageUris", type: "object"}
+              ]
+            }
+          },
+          {
+            function: {
+              name: "count-cars",
+              type: "CountCarsAWSLambda",
+              dataIns: [
+                {name: "imageUris", type: "object", source: "get-images/imageUris"}
+              ],
+              dataOuts: [
+                {name: "carCounts", type: "object"}
+              ]
+            },
+          },
+          {
+            function: {
+              name: "predict-car-count",
+              type: "PredictCarCountAWSLambda",
+              dataIns: [
+                {name: "predictFor", type: "number", source: "get-predict-for-timestamp/predictFor"},
+                {name: "carCounts", type: "object", source: "count-cars/carCounts"}
+              ],
+              dataOuts: [
+                {name: "carCountPrediction", type: "number"}
+              ]
+            }
+          },
+          {
+            function: {
+              name: "count-emergency-vehicles",
+              type: "CountEmergencyVehiclesAWSLambda",
+              dataIns: [
+                {name: "imageUris", type: "object", source: "get-images/imageUris"}
+              ],
+              dataOuts: [
+                {name: "emergencyVehicleCount", type: "number"}
+              ]
+            }
+          },
+          {
+            function: {
+              name: "update-vehicle-counts",
+              type: "UpdateVehicleCountAWSLambda",
+              dataIns: [
+                {name: "predictFor", type: "number", source: "get-predict-for-timestamp/predictFor"},
+                {name: "cameraId", type: "string", source: "analyze-data-per-camera/cameraIds"},
+                {name: "carCountPrediction", type: "number", source: "predict-car-count/carCountPrediction"},
+                {name: "emergencyVehicleCount", type: "number", source: "count-emergency-vehicles/emergencyVehicleCount"}
+              ],
+              dataOuts: [
+                {name: "ref", type: "number"}
+              ]
+            }
+          }
+        ],
+        dataOuts: [
+          {name: "ref", type: "array", source: "update-vehicle-counts/ref"}
+        ]
+      }
+    },
+    {
+      function: {
+        name: "get-station-list",
+        type: "GetStationListAWSLambda",
+        dataIns: [
+          {name: "ref", type: "array", source: "analyze-data-per-camera/ref"}
+        ],
+        dataOuts: [
+          {name: "stationIds", type: "array"}
+        ]
+      }
+    },
+    {
+      parallelFor: {
+        name: "analyze-data-per-station",
+        dataIns: [
+          {name: "stationIds", type: "array", source: "get-station-list/stationIds"}
+        ],
+        iterators: ["stationIds"],
+        loopBody: [
+          {
+            function: {
+              name: "predict-air-quality",
+              type: "PredictAirQualityAWSLambda",
+              dataIns: [
+                {name: "predictFor", type: "number", source: "get-predict-for-timestamp/predictFor"},
+                {name: "stationId", type: "string", source: "analyze-data-per-station/stationIds"}
+              ],
+              dataOuts: [
+                {name: "ref", type: "number"}
+              ]
+            }
+          }
+        ],
+        dataOuts: [
+          {name: "ref", type: "array", source: "predict-air-quality/ref"}
+        ]
+      }
+    },
+    {
+      function: {
+        name: "get-street-list",
+        type: "GetStreetListAWSLambda",
+        dataIns: [
+          {name: "analyze-data-per-station", type: "array", source: "analyze-data-per-station/ref"}
+        ],
+        dataOuts: [
+          {name: "streetIds", type: "array"}
+        ]
+      }
+    },
+    {
+      parallelFor: {
+        name: "check-limits-per-street",
+        dataIns: [
+          {name: "streetIds", type: "array", source: "get-street-list/streetIds"}
+        ],
+        iterators: ["streetIds"],
+        loopBody: [
+          {
+            function: {
+              name: "check-limits",
+              type: "CheckLimitsAWSLambda",
+              dataIns: [
+                {name: "predictFor", type: "number", source: "get-predict-for-timestamp/predictFor"},
+                {name: "streetId", type: "string", source: "check-limits-per-street/streetIds"}
+              ],
+              dataOuts: [
+                {name: "ref", type: "number"}
+              ]
+            }
+          }
+        ],
+        dataOuts: [
+          {name: "ref", type: "array", source: "check-limits/ref"}
+        ]
+      }
+    },
+    {
+      function: {
+        name: "get-section-list",
+        type: "GetSectionListAWSLambda",
+        dataIns: [
+          {name: "ref", type: "array", source: "check-limits-per-street/ref"}
+        ],
+        dataOuts: [
+          {name: "sectionIds", type: "array"}
+        ]
+      }
+    },
+    {
+      parallelFor: {
+        name: "determine-info-per-section",
+        dataIns: [
+          {name: "sectionIds", type: "array", source: "get-section-list/sectionIds"}
+        ],
+        iterators: ["sectionIds"],
+        loopBody: [
+          {
+            function: {
+              name: "determine-info",
+              type: "DetermineInfoAWSLambda",
+              dataIns: [
+                {name: "predictFor", type: "number", source: "get-predict-for-timestamp/predictFor"},
+                {name: "sectionId", type: "string", source: "determine-info-per-section/sectionIds"}
+              ],
+              dataOuts: [
+                {name: "ref", type: "array"}
+              ]
+            }
+          }
+        ],
+        dataOuts: [
+          {name: "ref", type: "array", source: "determine-info/ref"}
+        ]
+      }
+    }
+  ],
+  dataOuts: []
+}

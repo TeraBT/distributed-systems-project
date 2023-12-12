@@ -1,3 +1,3 @@
 def handler(event, context):
     print(event)
-    return {"message": f"Hello from {__file__}"}
+    return {"1": "img1", "2": "img2"}  # imageUris

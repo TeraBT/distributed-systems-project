@@ -1,0 +1,356 @@
+{
+    "StartAt": "Get predict for timestamp",
+    "States": {
+      "Get predict for timestamp": {
+        "Next": "Analyze input data",
+        "Retry": [
+          {
+            "ErrorEquals": [
+              "Lambda.ClientExecutionTimeoutException",
+              "Lambda.ServiceException",
+              "Lambda.AWSLambdaException",
+              "Lambda.SdkClientException"
+            ],
+            "IntervalSeconds": 2,
+            "MaxAttempts": 6,
+            "BackoffRate": 2
+          }
+        ],
+        "Type": "Task",
+        "ResultSelector": {
+          "predictFor.$": "$"
+        },
+        "Resource": <get-predict-for-timestamp Lambda ARN here (in quotes)>
+      },
+      "Analyze input data": {
+        "Type": "Parallel",
+        "ResultPath": null,
+        "Next": "Get street list",
+        "Branches": [
+          {
+            "StartAt": "Get camera list",
+            "States": {
+              "Get camera list": {
+                "Next": "Analyze data per camera",
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "Lambda.ClientExecutionTimeoutException",
+                      "Lambda.ServiceException",
+                      "Lambda.AWSLambdaException",
+                      "Lambda.SdkClientException"
+                    ],
+                    "IntervalSeconds": 2,
+                    "MaxAttempts": 6,
+                    "BackoffRate": 2
+                  }
+                ],
+                "Type": "Task",
+                "ResultPath": "$.cameraIds",
+                "Resource": <get-camera-list Lambda ARN here (in quotes)>
+              },
+              "Analyze data per camera": {
+                "Type": "Map",
+                "End": true,
+                "Parameters": {
+                  "cameraId.$": "$$.Map.Item.Value",
+                  "predictFor.$": "$.predictFor"
+                },
+                "Iterator": {
+                  "StartAt": "Get images",
+                  "States": {
+                    "Get images": {
+                      "Next": "Count all vehicles",
+                      "Retry": [
+                        {
+                          "ErrorEquals": [
+                            "Lambda.ClientExecutionTimeoutException",
+                            "Lambda.ServiceException",
+                            "Lambda.AWSLambdaException",
+                            "Lambda.SdkClientException"
+                          ],
+                          "IntervalSeconds": 2,
+                          "MaxAttempts": 6,
+                          "BackoffRate": 2
+                        }
+                      ],
+                      "Type": "Task",
+                      "ResultPath": "$.imageUris",
+                      "Resource": <get-images Lambda ARN here (in quotes)>
+                    },
+                    "Count all vehicles": {
+                      "Type": "Parallel",
+                      "ResultPath": "$.counts",
+                      "Next": "Update vehicles count",
+                      "Branches": [
+                        {
+                          "StartAt": "Count cars",
+                          "States": {
+                            "Count cars": {
+                              "Next": "Predict car count",
+                              "Retry": [
+                                {
+                                  "ErrorEquals": [
+                                    "Lambda.ClientExecutionTimeoutException",
+                                    "Lambda.ServiceException",
+                                    "Lambda.AWSLambdaException",
+                                    "Lambda.SdkClientException"
+                                  ],
+                                  "IntervalSeconds": 2,
+                                  "MaxAttempts": 6,
+                                  "BackoffRate": 2
+                                }
+                              ],
+                              "Type": "Task",
+                              "InputPath": "$.imageUris",
+                              "ResultPath": "$.carCount",
+                              "Resource": <count-cars Lambda ARN here (in quotes)>
+                            },
+                            "Predict car count": {
+                              "End": true,
+                              "Retry": [
+                                {
+                                  "ErrorEquals": [
+                                    "Lambda.ClientExecutionTimeoutException",
+                                    "Lambda.ServiceException",
+                                    "Lambda.AWSLambdaException",
+                                    "Lambda.SdkClientException"
+                                  ],
+                                  "IntervalSeconds": 2,
+                                  "MaxAttempts": 6,
+                                  "BackoffRate": 2
+                                }
+                              ],
+                              "Type": "Task",
+                              "ResultSelector": {
+                                "carCountPrediction.$": "$"
+                              },
+                              "Resource": <predict-car-count Lambda ARN here (in quotes)>
+                            }
+                          }
+                        },
+                        {
+                          "StartAt": "Count emergency vehicles",
+                          "States": {
+                            "Count emergency vehicles": {
+                              "End": true,
+                              "Retry": [
+                                {
+                                  "ErrorEquals": [
+                                    "Lambda.ClientExecutionTimeoutException",
+                                    "Lambda.ServiceException",
+                                    "Lambda.AWSLambdaException",
+                                    "Lambda.SdkClientException"
+                                  ],
+                                  "IntervalSeconds": 2,
+                                  "MaxAttempts": 6,
+                                  "BackoffRate": 2
+                                }
+                              ],
+                              "Type": "Task",
+                              "InputPath": "$.imageUris",
+                              "ResultSelector": {
+                                "emergencyVehicleCount.$": "$"
+                              },
+                              "Resource": <count-emergency-vehicles Lambda ARN here (in quotes)>
+                            }
+                          }
+                        }
+                      ],
+                      "ResultSelector": {
+                        "carCountPrediction.$": "$[0].carCountPrediction",
+                        "emergencyVehicleCount.$": "$[1].emergencyVehicleCount"
+                      }
+                    },
+                    "Update vehicles count": {
+                      "End": true,
+                      "Retry": [
+                        {
+                          "ErrorEquals": [
+                            "Lambda.ClientExecutionTimeoutException",
+                            "Lambda.ServiceException",
+                            "Lambda.AWSLambdaException",
+                            "Lambda.SdkClientException"
+                          ],
+                          "IntervalSeconds": 2,
+                          "MaxAttempts": 6,
+                          "BackoffRate": 2
+                        }
+                      ],
+                      "Type": "Task",
+                      "Resource": <update-vehicles-count Lambda ARN here (in quotes)>
+                    }
+                  }
+                },
+                "ItemsPath": "$.cameraIds",
+                "MaxConcurrency": 40
+              }
+            }
+          },
+          {
+            "StartAt": "Get station list",
+            "States": {
+              "Get station list": {
+                "Next": "Analyze data per station",
+                "Retry": [
+                  {
+                    "ErrorEquals": [
+                      "Lambda.ClientExecutionTimeoutException",
+                      "Lambda.ServiceException",
+                      "Lambda.AWSLambdaException",
+                      "Lambda.SdkClientException"
+                    ],
+                    "IntervalSeconds": 2,
+                    "MaxAttempts": 6,
+                    "BackoffRate": 2
+                  }
+                ],
+                "Type": "Task",
+                "ResultPath": "$.stationIds",
+                "Resource": <get-station-list Lambda ARN here (in quotes)>
+              },
+              "Analyze data per station": {
+                "Type": "Map",
+                "End": true,
+                "Parameters": {
+                  "stationId.$": "$$.Map.Item.Value",
+                  "predictFor.$": "$.predictFor"
+                },
+                "Iterator": {
+                  "StartAt": "Predict air quality",
+                  "States": {
+                    "Predict air quality": {
+                      "End": true,
+                      "Retry": [
+                        {
+                          "ErrorEquals": [
+                            "Lambda.ClientExecutionTimeoutException",
+                            "Lambda.ServiceException",
+                            "Lambda.AWSLambdaException",
+                            "Lambda.SdkClientException"
+                          ],
+                          "IntervalSeconds": 2,
+                          "MaxAttempts": 6,
+                          "BackoffRate": 2
+                        }
+                      ],
+                      "Type": "Task",
+                      "Resource": <predict-air-quality Lambda ARN here (in quotes)>
+                    }
+                  }
+                },
+                "ItemsPath": "$.stationIds",
+                "MaxConcurrency": 40
+              }
+            }
+          }
+        ]
+      },
+      "Get street list": {
+        "Next": "Check limits per street",
+        "Retry": [
+          {
+            "ErrorEquals": [
+              "Lambda.ClientExecutionTimeoutException",
+              "Lambda.ServiceException",
+              "Lambda.AWSLambdaException",
+              "Lambda.SdkClientException"
+            ],
+            "IntervalSeconds": 2,
+            "MaxAttempts": 6,
+            "BackoffRate": 2
+          }
+        ],
+        "Type": "Task",
+        "ResultPath": "$.streetIds",
+        "Resource": <get-street-list Lambda ARN here (in quotes)>
+      },
+      "Check limits per street": {
+        "Type": "Map",
+        "ResultPath": null,
+        "Next": "Get section list",
+        "Parameters": {
+          "streetId.$": "$$.Map.Item.Value",
+          "predictFor.$": "$.predictFor"
+        },
+        "Iterator": {
+          "StartAt": "Check limits",
+          "States": {
+            "Check limits": {
+              "End": true,
+              "Retry": [
+                {
+                  "ErrorEquals": [
+                    "Lambda.ClientExecutionTimeoutException",
+                    "Lambda.ServiceException",
+                    "Lambda.AWSLambdaException",
+                    "Lambda.SdkClientException"
+                  ],
+                  "IntervalSeconds": 2,
+                  "MaxAttempts": 6,
+                  "BackoffRate": 2
+                }
+              ],
+              "Type": "Task",
+              "Resource": <get-section-list Lambda ARN here (in quotes)>
+            }
+          }
+        },
+        "ItemsPath": "$.streetIds",
+        "MaxConcurrency": 40
+      },
+      "Get section list": {
+        "Next": "Determine info per section",
+        "Retry": [
+          {
+            "ErrorEquals": [
+              "Lambda.ClientExecutionTimeoutException",
+              "Lambda.ServiceException",
+              "Lambda.AWSLambdaException",
+              "Lambda.SdkClientException"
+            ],
+            "IntervalSeconds": 2,
+            "MaxAttempts": 6,
+            "BackoffRate": 2
+          }
+        ],
+        "Type": "Task",
+        "ResultPath": "$.sectionIds",
+        "Resource": <get-section-list Lambda ARN here (in quotes)>
+      },
+      "Determine info per section": {
+        "Type": "Map",
+        "ResultPath": null,
+        "End": true,
+        "Parameters": {
+          "sectionId.$": "$$.Map.Item.Value",
+          "predictFor.$": "$.predictFor"
+        },
+        "Iterator": {
+          "StartAt": "Determine info",
+          "States": {
+            "Determine info": {
+              "End": true,
+              "Retry": [
+                {
+                  "ErrorEquals": [
+                    "Lambda.ClientExecutionTimeoutException",
+                    "Lambda.ServiceException",
+                    "Lambda.AWSLambdaException",
+                    "Lambda.SdkClientException"
+                  ],
+                  "IntervalSeconds": 2,
+                  "MaxAttempts": 6,
+                  "BackoffRate": 2
+                }
+              ],
+              "Type": "Task",
+              "Resource": <gdetermine-info Lambda ARN here (in quotes)>
+            }
+          }
+        },
+        "ItemsPath": "$.sectionIds",
+        "MaxConcurrency": 40
+      }
+    }
+  }

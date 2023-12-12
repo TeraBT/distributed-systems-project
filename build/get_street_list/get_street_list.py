@@ -1,3 +1,3 @@
 def handler(event, context):
     print(event)
-    return {"message": f"Hello from {__file__}"}
+    return ["street1", "street2"]  # streetIds

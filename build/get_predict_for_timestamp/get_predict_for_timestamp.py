@@ -1,3 +1,3 @@
 def handler(event, context):
     print(event)
-    return {"predictFor": 0}
+    return 0  # predictFor

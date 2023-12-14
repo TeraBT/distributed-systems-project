@@ -191,19 +191,19 @@
 
 ## Read
 
-| ID | Use case | Method | Partition key | Sort key | Projected attributes |
-|---|---|---|---|---|---|
-| APR1 | UC1-1 | Query | "baseEntity" | BEGINS WITH "camera#" | SK |
-| APR2 | UC2-1 | Query | "camera#{ID}" | GREATER THAN "image#{beginning of timerange to consider}" | SK, URI |
-| APR3 | UC4-1 | Query | "baseEntity" | BEGINS WITH "station#" | SK |
-| APR4 | UC5-1 | Query | "station#{ID}" | GREATER THAN "measurement#{beginning of timerange to consider}" | SK, airQuality |
-| APR5 | UC6-1 | Query | "baseEntity" | BEGINS WITH "street#" | SK |
-| APR6 | UC7-1/2 | GetItem | "baseEntity" | EQUAL TO "street#{ID} | cameras, station, trafficCapacity, airQualityLimit |
-| APR7 | UC7-1 | BatchGetItem | for each camera ID: "camera#{ID}" | EQUAL TO "trafficCount#{timestamp}" | PK, carCountPrediction, emergencyVehicleCount |
-| APR8 | UC7-1 | GetItem | "station#{ID}" | EQUAL TO "prediction#{ID}" | airQuality |
-| APR9 | UC8-1 | GetItem | "baseEntity" | BEGINS WITH "section#" | SK |
-| APR10 | UC9-1/2| GetItem | "baseEntity" | EQUAL TO "section#{ID}" | street, defaultSpeedLimit |
-| APR11 | UC9-1 | GetItem | "street#{ID}" | EQUAL TO "info#{timestamp}" | trafficLoad, emergencyVehicleLoad, airQualityLoad |
+| ID | Use case | Method | Partition key | Sort key | Projected attributes | Consistency |
+|---|---|---|---|---|---|---|
+| APR1 | UC1-1 | Query | "baseEntity" | BEGINS WITH "camera#" | SK | eventual |
+| APR2 | UC2-1 | Query | "camera#{ID}" | GREATER THAN "image#{beginning of timerange to consider}" | SK, URI | eventual |
+| APR3 | UC4-1 | Query | "baseEntity" | BEGINS WITH "station#" | SK | eventual |
+| APR4 | UC5-1 | Query | "station#{ID}" | GREATER THAN "measurement#{beginning of timerange to consider}" | SK, airQuality | eventual |
+| APR5 | UC6-1 | Query | "baseEntity" | BEGINS WITH "street#" | SK | eventual |
+| APR6 | UC7-1/2 | GetItem | "baseEntity" | EQUAL TO "street#{ID} | cameras, station, trafficCapacity, airQualityLimit | eventual |
+| APR7 | UC7-1 | BatchGetItem | for each camera ID: "camera#{ID}" | EQUAL TO "trafficCount#{timestamp}" | PK, carCountPrediction, emergencyVehicleCount | strong |
+| APR8 | UC7-1 | GetItem | "station#{ID}" | EQUAL TO "prediction#{ID}" | airQuality | strong | 
+| APR9 | UC8-1 | GetItem | "baseEntity" | BEGINS WITH "section#" | SK | eventual |
+| APR10 | UC9-1/2| GetItem | "baseEntity" | EQUAL TO "section#{ID}" | street, defaultSpeedLimit | eventual |
+| APR11 | UC9-1 | GetItem | "street#{ID}" | EQUAL TO "info#{timestamp}" | trafficLoad, emergencyVehicleLoad, airQualityLoad | strong |
 
 ## Write
 

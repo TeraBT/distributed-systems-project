@@ -65,6 +65,12 @@
         <td>-</td>
     </tr>
     <tr>
+        <td>baseEntity</td>
+        <td>station#{ID}</td>
+        <td>-</td>
+        <td>station</td>
+    </tr>
+    <tr>
         <td>station#{ID}</td>
         <td>measurement#{timestamp}</td>
         <td><ul>
@@ -198,7 +204,7 @@
 | APR3 | UC4-1 | Query | "baseEntity" | BEGINS WITH "station#" | SK | eventual |
 | APR4 | UC5-1 | Query | "station#{ID}" | GREATER THAN "measurement#{beginning of timerange to consider}" | SK, airQuality | eventual |
 | APR5 | UC6-1 | Query | "baseEntity" | BEGINS WITH "street#" | SK | eventual |
-| APR6 | UC7-1/2 | GetItem | "baseEntity" | EQUAL TO "street#{ID} | cameras, station, trafficCapacity, airQualityLimit | eventual |
+| APR6 | UC7-1/2 | GetItem | "baseEntity" | EQUAL TO "street#{ID}" | cameras, station, trafficCapacity, airQualityLimit | eventual |
 | APR7 | UC7-1 | BatchGetItem | for each camera ID: "camera#{ID}" | EQUAL TO "trafficCount#{timestamp}" | PK, carCountPrediction, emergencyVehicleCount | strong |
 | APR8 | UC7-1 | GetItem | "station#{ID}" | EQUAL TO "prediction#{ID}" | airQuality | strong | 
 | APR9 | UC8-1 | Query | "baseEntity" | BEGINS WITH "section#" | SK | eventual |

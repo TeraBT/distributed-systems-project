@@ -39,7 +39,7 @@
             <li>URI
                 <ul>
                     <li>type: string</li>
-                    <li>value: {imageUri}</li>
+                    <li>value: key of image in S3 bucket</li>
                 </ul>
             </li>
         </ul></td>
@@ -52,13 +52,13 @@
             <li>carCountPrediction
                 <ul>
                     <li>type: number</li>
-                    <li>value: {carCountPrediction}</li>
+                    <li>value: predicted number of cars for the given prediction time</li>
                 </ul>
             </li>
             <li>emergencyVehicleCount
                 <ul>
                     <li>type: number</li>
-                    <li>value: {emergencyVehicleCount}</li>
+                    <li>value: currently effective number of emergency vehicles</li>
                 </ul>
             </li>
         </ul></td>
@@ -97,13 +97,13 @@
             <li>cameras
                 <ul>
                     <li>type: list[string]</li>
-                    <li>values: {cameraIDs}
+                    <li>values: IDs of cameras that cover the street
                 </ul>
             </li>
             <li>station
                 <ul>
                     <li>type: string</li>
-                    <li>value: {stationID}</li>
+                    <li>value: ID of the station that covers the street</li>
                 </ul>
             </li>
             <li>trafficCapacity
@@ -153,7 +153,7 @@
             <li>street
                 <ul>
                     <li>type: string</li>
-                    <li>value: {streetID}</li>
+                    <li>value: ID of the street on which the section is placed</li>
                 </ul>
             </li>
             <li>defaultSpeedLimit
@@ -201,7 +201,7 @@
 | APR6 | UC7-1/2 | GetItem | "baseEntity" | EQUAL TO "street#{ID} | cameras, station, trafficCapacity, airQualityLimit | eventual |
 | APR7 | UC7-1 | BatchGetItem | for each camera ID: "camera#{ID}" | EQUAL TO "trafficCount#{timestamp}" | PK, carCountPrediction, emergencyVehicleCount | strong |
 | APR8 | UC7-1 | GetItem | "station#{ID}" | EQUAL TO "prediction#{ID}" | airQuality | strong | 
-| APR9 | UC8-1 | GetItem | "baseEntity" | BEGINS WITH "section#" | SK | eventual |
+| APR9 | UC8-1 | Query | "baseEntity" | BEGINS WITH "section#" | SK | eventual |
 | APR10 | UC9-1/2| GetItem | "baseEntity" | EQUAL TO "section#{ID}" | street, defaultSpeedLimit | eventual |
 | APR11 | UC9-1 | GetItem | "street#{ID}" | EQUAL TO "info#{timestamp}" | trafficLoad, emergencyVehicleLoad, airQualityLoad | strong |
 

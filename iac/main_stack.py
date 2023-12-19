@@ -1,7 +1,7 @@
 import builtins
 import os
 
-from aws_cdk import Stack
+from aws_cdk import RemovalPolicy, Stack
 from aws_cdk import aws_dynamodb as dynamodb
 from aws_cdk import aws_lambda as lambda_
 from aws_cdk import aws_s3 as s3
@@ -23,7 +23,7 @@ class MainStack(Stack):
             partition_key=dynamodb.Attribute(name="PK", type=dynamodb.AttributeType.STRING),
             sort_key=dynamodb.Attribute(name="SK", type=dynamodb.AttributeType.STRING),
             billing_mode=dynamodb.BillingMode.PAY_PER_REQUEST,
-            deletion_protection=False,
+            removal_policy=RemovalPolicy.DESTROY,
         )
 
         central_bucket = s3.Bucket(self, "central_bucket")

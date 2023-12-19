@@ -32,7 +32,6 @@ def get_camera_ids_from_table(
             KeyConditionExpression=(Key("PK").eq("baseEntity") & Key("SK").begins_with("camera#")),
             Select="SPECIFIC_ATTRIBUTES",
             ProjectionExpression="SK",
-            Limit=1,
             **optional_params,
         )
     except Exception as e:

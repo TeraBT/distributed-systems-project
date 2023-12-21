@@ -182,12 +182,20 @@ def calculate_air_quality_load(air_quality_limit: float, air_quality_prediction:
 
     :param air_quality_limit: The air quality limit of the street
     :param air_quality_prediction: The air quality prediction for the station covering the street
-    :return: The air quality load as percentage of limit
+    :return: The air quality load (smaller is better)
     """
 
-    # calculate relative load
-    if air_quality_limit > 0.0:
-        air_quality_load = air_quality_prediction / air_quality_limit
+    # the higher the air quality value, the better the air quality -> 1.0 = best possible quality, 0.0 = worst possible quality
+    # limit is to be considered on same scale
+    # air quality limit is exceeded, if air quality <= air quality limit
+    # if air quality > air quality limit -> load < 1.0 (good air)
+    # if air quality == air quality limit -> load = 1.0 (at limit)
+    # if air quality < air quality limit -> load > 1.0 (bad air)
+    # minimum air quality load: 0.0
+    if air_quality_limit < 1.0:
+        air_quality_load = (1 / (air_quality_limit - 1)) * air_quality_prediction + (
+            1 / (1 - air_quality_limit)
+        )
     else:
         air_quality_load = 1.0
 

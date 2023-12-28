@@ -1,4 +1,20 @@
-{
+#!/usr/bin/env bash
+
+query_lambda_arn () {
+    aws lambda get-function --function-name $1 --query 'Configuration.FunctionArn' --output text
+}
+
+lab_role=$(
+aws iam get-role \
+    --role-name LabRole \
+    --query 'Role.Arn' \
+    --output text
+)
+
+aws stepfunctions create-state-machine \
+    --name traffic_prediction_workflow \
+    --role-arn $lab_role \
+    --definition '{
     "StartAt": "Get predict for timestamp",
     "States": {
       "Get predict for timestamp": {
@@ -20,7 +36,7 @@
         "ResultSelector": {
           "predictFor.$": "$"
         },
-        "Resource": <get-predict-for-timestamp Lambda ARN here (in quotes)>
+        "Resource": "'"$(query_lambda_arn get_predict_for_timestamp)"'"
       },
       "Analyze input data": {
         "Type": "Parallel",
@@ -47,7 +63,7 @@
                 ],
                 "Type": "Task",
                 "ResultPath": "$.cameraIds",
-                "Resource": <get-camera-list Lambda ARN here (in quotes)>
+                "Resource": "'"$(query_lambda_arn get_camera_list)"'"
               },
               "Analyze data per camera": {
                 "Type": "Map",
@@ -76,7 +92,7 @@
                       ],
                       "Type": "Task",
                       "ResultPath": "$.imageUris",
-                      "Resource": <get-images Lambda ARN here (in quotes)>
+                      "Resource": "'"$(query_lambda_arn get_images)"'"
                     },
                     "Count all vehicles": {
                       "Type": "Parallel",
@@ -104,7 +120,8 @@
                               "Type": "Task",
                               "InputPath": "$.imageUris",
                               "ResultPath": "$.carCount",
-                              "Resource": <count-cars Lambda ARN here (in quotes)>
+                              "Resource": "'"$(query_lambda_arn count_cars)"'"
+
                             },
                             "Predict car count": {
                               "End": true,
@@ -125,7 +142,7 @@
                               "ResultSelector": {
                                 "carCountPrediction.$": "$"
                               },
-                              "Resource": <predict-car-count Lambda ARN here (in quotes)>
+                              "Resource": "'"$(query_lambda_arn predict_car_count)"'"
                             }
                           }
                         },
@@ -152,7 +169,7 @@
                               "ResultSelector": {
                                 "emergencyVehicleCount.$": "$"
                               },
-                              "Resource": <count-emergency-vehicles Lambda ARN here (in quotes)>
+                              "Resource": "'"$(query_lambda_arn count_emergency_vehicles)"'"
                             }
                           }
                         }
@@ -178,7 +195,7 @@
                         }
                       ],
                       "Type": "Task",
-                      "Resource": <update-vehicles-count Lambda ARN here (in quotes)>
+                      "Resource": "'"$(query_lambda_arn update_vehicles_count)"'"
                     }
                   }
                 },
@@ -207,7 +224,7 @@
                 ],
                 "Type": "Task",
                 "ResultPath": "$.stationIds",
-                "Resource": <get-station-list Lambda ARN here (in quotes)>
+                "Resource": "'"$(query_lambda_arn get_station_list)"'"
               },
               "Analyze data per station": {
                 "Type": "Map",
@@ -235,7 +252,7 @@
                         }
                       ],
                       "Type": "Task",
-                      "Resource": <predict-air-quality Lambda ARN here (in quotes)>
+                      "Resource": "'"$(query_lambda_arn predict_air_quality)"'"
                     }
                   }
                 },
@@ -263,7 +280,7 @@
         ],
         "Type": "Task",
         "ResultPath": "$.streetIds",
-        "Resource": <get-street-list Lambda ARN here (in quotes)>
+        "Resource": "'"$(query_lambda_arn get_street_list)"'"
       },
       "Check limits per street": {
         "Type": "Map",
@@ -292,7 +309,7 @@
                 }
               ],
               "Type": "Task",
-              "Resource": <check-limits Lambda ARN here (in quotes)>
+              "Resource": "'"$(query_lambda_arn check_limits)"'"
             }
           }
         },
@@ -316,7 +333,7 @@
         ],
         "Type": "Task",
         "ResultPath": "$.sectionIds",
-        "Resource": <get-section-list Lambda ARN here (in quotes)>
+        "Resource": "'"$(query_lambda_arn get_section_list)"'"
       },
       "Determine info per section": {
         "Type": "Map",
@@ -345,7 +362,7 @@
                 }
               ],
               "Type": "Task",
-              "Resource": <determine-info Lambda ARN here (in quotes)>
+              "Resource": "'"$(query_lambda_arn determine_info)"'"
             }
           }
         },
@@ -353,4 +370,4 @@
         "MaxConcurrency": 40
       }
     }
-  }
+  }'

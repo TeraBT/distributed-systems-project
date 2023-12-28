@@ -1,0 +1,91 @@
+@startjson
+{
+    "street_name": "street_1",
+    "cameras": [
+      {
+        "camera_id": "283af2d5-35a7-4814-9820-5310a2f0e0a7",
+        "images_path": "2023-12-18_18-02.png"
+      },
+      {
+        "camera_id": "1c09caa6-4347-4c2a-a6e9-7d152f1622bd",
+        "images_path": "2023-12-18_17-57.png"
+      },
+      {
+        "camera_id": "b5f80060-2829-4e3c-8edc-04ee6ed962ce",
+        "images_path": "2023-12-18_18-05.png"
+      },
+      {
+        "camera_id": "0d179a99-b796-4afe-8340-43ecb0b6eb1b",
+        "images_path": "2023-12-18_17-56.png"
+      },
+      {
+        "camera_id": "8b7d4469-dcec-4684-967d-52c7117b921d",
+        "images_path": "2023-12-18_17-55.png"
+      },
+      {
+        "camera_id": "9e85e1b4-cb0d-4f34-944b-f4ba4bdd80da",
+        "images_path": "2023-12-18_18-04.png"
+      },
+      {
+        "camera_id": "ceeac820-a730-46d2-9a17-0aaf8edffcfd",
+        "images_path": "2023-12-18_18-03.png"
+      },
+      {
+        "camera_id": "10f9e5bc-a5b7-4728-8c32-7e9695851131",
+        "images_path": "2023-12-18_17-59.png"
+      },
+      {
+        "camera_id": "6322fdb5-a235-4299-8fdf-93df9818ab3d",
+        "images_path": "2023-12-18_17-58.png"
+      },
+      {
+        "camera_id": "2aaaf665-d770-430d-8636-ef9b0a55dd53",
+        "images_path": "2023-12-18_17-60.png"
+      }
+    ],
+    "sensor_station": {
+      "station_id": "587a2305-4eb4-4eaf-8abf-612facbcb9ea",
+      "measurements": [
+        {
+          "1703781959": 0.5091277255088327
+        },
+        {
+          "1703782559": 0.4397996013359923
+        },
+        {
+          "1703783159": 0.40161983522987854
+        },
+        {
+          "1703783759": 0.35708494767261023
+        },
+        {
+          "1703784359": 0.3072830236766313
+        },
+        {
+          "1703784959": 0.23814487073115564
+        },
+        {
+          "1703785559": 0.2068451869079681
+        },
+        {
+          "1703786159": 0.13110992137184194
+        },
+        {
+          "1703786759": 0.09923856403407999
+        },
+        {
+          "1703787359": 0.0375703601834341
+        }
+      ]
+    },
+    "sections": [
+      {
+        "section_id": "422e9258-057d-45b2-9d7d-faf1c5470e9e",
+        "street_name": "street_1",
+        "defaultSpeedLimit": 40
+      }
+    ],
+    "trafficCapacity": 15,
+    "airQualityLimit": 0.6566950331798246
+  }
+@endjson

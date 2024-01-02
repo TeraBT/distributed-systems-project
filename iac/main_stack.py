@@ -41,7 +41,7 @@ class MainStack(Stack):
         central_table.grant_read_data(get_camera_list.function)
 
         get_images = WorkflowLambda(self, "get_images", lambda_env_variables)
-        central_bucket.grant_read(get_images.function)
+        central_table.grant_read_data(get_images.function)
 
         count_cars = WorkflowLambda(self, "count_cars", lambda_env_variables)
         central_bucket.grant_read(count_cars.function)

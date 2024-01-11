@@ -15,3 +15,5 @@ config.json
 # CDK asset staging directory
 .cdk.staging
 cdk.out
+
+old_doc/
